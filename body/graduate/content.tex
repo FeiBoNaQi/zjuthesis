@@ -1,27 +1,27 @@
 \chapter{绪论}
-    \section{研究背景及意义}
-    \section{国内外研究现状}
-    \section{本文主要工作}
-    \section{本文结构安排}
+\section{研究背景及意义}
+\section{国内外研究现状}
+\section{本文主要工作}
+\section{本文结构安排}
 
 \chapter{相关技术}
-    \section{UWB信道脉冲响应相关技术}
-    \section{深度学习相关技术}
+\section{UWB信道脉冲响应相关技术}
+\section{深度学习相关技术}
 
 \chapter{数据预处理}
-    \section{上采样}
-      Decawave（Qorvo）的DWM1000，NXP的NCJ29D5设备的采样频率为998.4MHz，对应的采样间隔为\( \Delta \tau \)=1.0016ns
-    \section{对齐}
-    \section{方差图}    
-    
+\section{上采样}
+Decawave（Qorvo）的DWM1000，NXP的NCJ29D5设备的采样频率为998.4MHz，对应的采样间隔为\( \Delta \tau \)=1.0016ns
+\section{对齐}
+\section{方差图}
+
 \chapter{定位}
 
 \chapter{脚踢}
 
-    \section{引言}
-    \section{采集设备}
-    \section{模型训练}
-    \section{模型部署}
+\section{引言}
+\section{采集设备}
+\section{模型训练}
+\section{模型部署}
 
 
 
@@ -54,10 +54,10 @@
 \begin{itemize}
     \item 删除根目录的 ``.latexmkrc'' 文件，否则编译失败且不报任何错误
     \item 字体有版权所以本模板不能附带字体，请务必手动上传字体文件，并在各个专业模板下手动指定字体。
-        具体方法参照 GitHub 主页的说明。
+          具体方法参照 GitHub 主页的说明。
     \item 当前的Overleaf默认使用TexLive 2017进行编译，但一些伪粗体复制乱码的问题需要TexLive 2019版本来解决。
-        所以各位同学可以在Overleaf上编写论文时务必切换到TexLive 2019或更新版本来编译，以免产生查重相关问题。
-        具体说明参照 GitHub 主页。
+          所以各位同学可以在Overleaf上编写论文时务必切换到TexLive 2019或更新版本来编译，以免产生查重相关问题。
+          具体说明参照 GitHub 主页。
 \end{itemize}
 
 
@@ -116,20 +116,20 @@
         \ENSURE $y = x^n$
         \STATE $y \Leftarrow 1$
         \IF{$n < 0$}
-            \STATE $X \Leftarrow 1 / x$
-            \STATE $N \Leftarrow -n$
+        \STATE $X \Leftarrow 1 / x$
+        \STATE $N \Leftarrow -n$
         \ELSE
-            \STATE $X \Leftarrow x$
-            \STATE $N \Leftarrow n$
+        \STATE $X \Leftarrow x$
+        \STATE $N \Leftarrow n$
         \ENDIF
         \WHILE{$N \neq 0$}
-            \IF{$N$ is even}
-                \STATE $X \Leftarrow X \times X$
-                \STATE $N \Leftarrow N / 2$
-            \ELSE[$N$ is odd]
-                \STATE $y \Leftarrow y \times X$
-                \STATE $N \Leftarrow N - 1$
-            \ENDIF
+        \IF{$N$ is even}
+        \STATE $X \Leftarrow X \times X$
+        \STATE $N \Leftarrow N / 2$
+        \ELSE[$N$ is odd]
+        \STATE $y \Leftarrow y \times X$
+        \STATE $N \Leftarrow N - 1$
+        \ENDIF
         \ENDWHILE
     \end{algorithmic}
     \caption{\label{alg:sample}算法样例}
