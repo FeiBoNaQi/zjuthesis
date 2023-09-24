@@ -84,6 +84,8 @@ Decawave（Qorvo）的 DWM1000 和 NXP 的 NCJ29D5 设备的采样频率为 \(99
     \label{fig:interpolation}
 \end{figure}
 
+本文以信道3为例，介绍sinc插值的过程。
+
 零填充:
 首先，通过在原始数据样本(图\ref{fig:time})之间插入零，
 对数据进行上采样。在每个原始数据样点之间插入 \( ( \text{upsample\_factor} - 1) \) 个零。
@@ -105,10 +107,10 @@ Decawave（Qorvo）的 DWM1000 和 NXP 的 NCJ29D5 设备的采样频率为 \(99
 在代码中，sinc 函数的参数是通过时域索引和上采样因子来调整的，以确保 sinc 函数正确对齐在零填充数据的样点上。
 
 \[
-    t = \text{np.arange}(-\text{len(zero\_padded\_data)}//2, \text{len(zero\_padded\_data)}//2)
+    t = \text{np.arange}(-\text{len(zero\_padded\_data)}//2, \text{len(zero\_padded\_data)}//2) * 10^{-9}
 \]
 \[
-\text{sinc\_func} = \text{np.sinc}(t / \text{upsample\_factor})
+    \text{sinc\_func} = \text{np.sinc}(\frac{t \cdot \text{cutoff\_frequency}}{\text{upsample\_factor} })
 \]
 其中zero\_padded\_data为零填充后的数据，upsample\_factor为上采样因子。
 sinc函数的时频域图如\ref{fig:sinc}所示。
@@ -131,10 +133,7 @@ sinc函数的时频域图如\ref{fig:sinc}所示。
 从频域看，这相当于sinc函数与零填充数据的傅里叶变换的乘积，把零填充后的频域图(\ref{fig:zero_freq})转化为 sinc 插值后的频域图(\ref{fig:sinc_freq})。
 从而在保证频域一致性的同时提高了时域的采样率
 
-
-
 \subsection{fft法}
-
 此外，我们对测量结果应用了 sinc 插值。我们选择应用 sinc 插值是因为 IEEE 802.15.4a 通道 3 的频谱几乎是矩形的。
 对于 sinc 函数，我们将带宽加倍至 2B = 1 GHz，以避免相邻的 I 和 Q 样本之间产生不希望的干扰。
 为了拟合 CIR，我们在采样时间 Dtsinc ≪ 1/(2B) 的情况下形成了 sinc 函数。
