@@ -40,12 +40,15 @@ Decawave（Qorvo）的 DWM1000 和 NXP 的 NCJ29D5 设备的采样频率为 \(99
 
 \subsection{插值法}
 本文主要使用了UWB的信道3与信道4。据IEEE 802.15.4a，UWB信道3的中心频率为4492.8Mhz，带宽为449.2Mhz，UWB信道4的中心频率为3993.6，带宽为1331.2Mhz。
-信道3,4的频谱图像如图所示
+信道3,4的频谱图像如图所示，他们的频谱接近矩形，因此可以利用sinc插值来提高信号的采样频率。
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=.7\linewidth]{plotted/spectrum_mask}
     \caption{\label{fig:fig-spectrum_mask}UWB信道3，4频谱}
 \end{figure}
+
+
+
 \subsection{fft法}
 
 此外，我们对测量结果应用了 sinc 插值。我们选择应用 sinc 插值是因为 IEEE 802.15.4a 通道 3 的频谱几乎是矩形的。
