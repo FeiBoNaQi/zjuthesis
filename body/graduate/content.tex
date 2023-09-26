@@ -232,8 +232,32 @@ CIR 的最大值代表没有经过任何反射的直射信号，对应的距离�
 
 具体的效果如图 \ref{fig:align} 所示。经过上采样后，CIR 由图 \ref{fig:abs_cir} 变为图 \ref{fig:abs_up_cir}，此时 CIR 还未通过 \texttt{first\_path} 对齐。可以看到两条 CIR 数据虽然波形稳定，但是在水平方向有一个明显的偏差，这说明采样点没有对齐。在经过 \texttt{first\_path} 对齐后，我们得到图 \ref{fig:abs_time_up_cir}，完成对于采样点的对齐。
 
-
 \subsection{对齐相位}
+完成采样点对齐后，如图\ref{fig:abs_time_up_cir}所示，我们可以看到复数信号的绝对值已经对齐。
+然而，复数信号除了绝对值外，还包含相位信息。由于发送和接收设备之间的晶振不能完全同步，每次采样的初始相位都会有所不同。
+因此，即使完成了采样点对齐，如图\ref{fig:real_imag_time_up_cir}所示的实部和虚部图也不能直接使用。
+
+借助于CIR信号的稳定性，本文尝试对基于I/Q的CIR测量值 \( X \) 进行相位对齐，目标是最小化不同CIR数据相位的曼哈顿距离，从而最小化相位偏移的影响。
+本文借鉴了\cite{IQ9452299}提出的算法，该算法的核心思想是通过小步旋转预处理的 \( X_{\text{obs}} \)，
+并计算旋转后的观测 \( X_{\text{rot}} \) 和参考 \( X_{\text{ref}} \) 之间的差异。
+为了减少原算法的计算量，我们首先将first\_path位置的复数信号旋转到0相位，具体公式如下：
+\[
+X_{\text{start}} = X_{\text{obs}} \cdot e^{-j \cdot \text{angle}(X_{\text{obs}}[\text{first\_path}])}
+\]
+接下来，我们通过以下方式以小步旋转初始相位 \( X_{\text{start}} \)：
+\[
+X_{\text{rot}} = X_{\text{start}} \cdot e^{j\theta}
+\]
+每次旋转后，我们计算参考 \( X_{\text{ref}} \) 和旋转观测 \( X_{\text{rot}} \) 之间的 \( \ell_1 \)-距离：
+\[
+d_{\ell_1}(X_{\text{ref}}, X_{\text{rot}}) = \sum_{n=1}^N |X_{\text{ref}}[n] - X_{\text{rot}}[n]|
+\]
+在预定义的相位范围\((-5^\circ,5^\circ)\)内旋转 \( X_{\text{start}} \) 后，我们找到所有计算的 \( \ell_1 \)-距离的最小值：
+\[
+\hat{X} = \arg\min d_{\ell_1}(X_{\text{ref}}, X_{\text{rot}})
+\]
+其中 \( d_{\ell_1}(X_{\text{ref}}, X_{\text{rot}}) = \{d_{\ell_1}(X_{\text{ref}}, X_{\text{rot}})\} \) 是所有计算的 \( \ell_1 \)-距离的集合。最小值 \( \hat{X} \) 表示了最佳匹配。
+经过相位对齐后本文得到图\ref{fig:real_imag_time_phase_up_cir}。
 
 
 \section{异常值剔除}

@@ -1,4 +1,20 @@
 % use `texdoc biblatex` to get help
+@inproceedings{IQ9452299,
+  author    = {Cimdins, Marco and Schmidt, Sven Ole and Hellbrück, Horst},
+  booktitle = {2021 International Conference on Localization and GNSS (ICL-GNSS)},
+  title     = {Comparison of I/Q- and Magnitude-based UWB Channel Impulse Responses for Device-free Localization},
+  year      = {2021},
+  volume    = {},
+  number    = {},
+  pages     = {1-7},
+  doi       = {10.1109/ICL-GNSS51451.2021.9452299}
+}
+@www{dwm1000_user_manual,
+  title  = {DW1000 USER MANUAL},
+  author = {Decawave},
+  year   = {2017},
+  url    = {https://www.qorvo.com/products/d/da007967}
+}
 @article{IEEE_Std_802.15.4a,
   author  = {},
   journal = {IEEE Std 802.15.4a-2007 (Amendment to IEEE Std 802.15.4-2006)},
@@ -9,6 +25,7 @@
   pages   = {1-210},
   doi     = {10.1109/IEEESTD.2007.4299496}
 }
+
 @article{Ledergerber,
   author         = {Ledergerber, Anton and D’Andrea, Raffaello},
   title          = {A Multi-Static Radar Network with Ultra-Wideband Radio-Equipped Devices},
@@ -23,6 +40,8 @@
   abstract       = {A growing number of devices, from car key fobs to mobile phones to WiFi-routers, are equipped with ultra-wideband radios. In the network formed by these devices, communicating modules often estimate the channel impulse response to employ a matched filter to decode transmitted data or to accurately time stamp incoming messages when estimating the time-of-flight for localization. This paper investigates how such measurements of the channel impulse response can be utilized to augment existing ultra-wideband communication and localization networks to a multi-static radar network. The approach is experimentally evaluated using off-the-shelf hardware and simple, distributed filtering, and shows that a tag-free human walking in the space equipped with ultra-wideband modules can be tracked in real time. This opens the door for various location-based smart home applications, ranging from smart audio and light systems to elderly monitoring and security systems.},
   doi            = {10.3390/s20061599}
 }
+
+
 @article{MAMPI,
   author         = {Cimdins, Marco and Schmidt, Sven Ole and Hellbrück, Horst},
   title          = {MAMPI-UWB—Multipath-Assisted Device-Free Localization with Magnitude and Phase Information with UWB Transceivers},
@@ -36,13 +55,6 @@
   issn           = {1424-8220},
   abstract       = {In this paper, we propose a multipath-assisted device-free localization (DFL) system that includes magnitude and phase information (MAMPI). The DFL system employs ultra-wideband (UWB) channel impulse response (CIR) measurements, enabling the extraction of several multipath components (MPCs) and thereby benefits from multipath propagation. We propose a radio propagation model that calculates the effect on the received signal based on the position of a person within a target area. Additionally, we propose a validated error model for the measurements and explain the creation of different feature vectors and extraction of the MPCs from Decawave DW1000 CIR measurements. We evaluate the system via simulations of the position error probability and a measurement setup in an indoor scenario. We compare the performance of MAMPI to a conventional DFL system based on four sensor nodes that measures radio signal strength values. The combination of the magnitude and phase differences for the feature vectors results in a position error probability that is comparable to a conventional system but requires only two sensor nodes.},
   doi            = {10.3390/s20247090}
-}
-
-@www{dwm1000_user_manual,
-  title  = {DW1000 USER MANUAL},
-  author = {Decawave},
-  year   = {2017},
-  url    = {https://www.qorvo.com/products/d/da007967}
 }
 
 @www{tikz,
