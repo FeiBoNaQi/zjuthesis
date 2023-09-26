@@ -222,14 +222,15 @@ first\_path是通过decawave内置的波峰检测算法得到的~\cite{dwm1000_u
 
 获取first\_path：可以看到，不同起始点的CIR的波形是不一样的，但是它们的波形都是稳定的，所以可以通过最小距离的方法对齐CIR的起始点。
 
-对齐first\_path：在没有通过first\_path对齐的情况下，CIR的起始点是随机的，如图\ref{fig:first_path}所示，其中蓝线被略微抬高，以便与橙线做出区分。
+对齐 \texttt{first\_path}：如图 \ref{fig:first_path} 所示，在未通过 \texttt{first\_path} 对齐的情况下，CIR 的起始点是随机的。图中蓝线被略微抬高，以便与橙线区分。
 
-CIR的最大值代表的是没有经过任何反射的直射信号，对应的距离0，而first\_path就是这个0距离点相对于第一个采样点的位置的小数部分，如图\ref{fig:first_path}所示，不同样本同一采样点对应的距离在对齐前是不同的。
+CIR 的最大值代表没有经过任何反射的直射信号，对应的距离为0。而 \texttt{first\_path} 就是这个0距离点相对于第一个采样点的位置的小数部分。不同样本在对齐前，同一采样点对应的距离是不同的。
 
-图中蓝线的first\_path为0.25ns，橙线的first\_path为0.5ns，为了对齐蓝线与橙线，本文舍弃蓝线前0.25ns的数据，舍弃橙线前0.5ns的数据，从而实现对齐。
+图中蓝线的 \texttt{first\_path} 为 \(0.25\, \text{ns}\)，橙线的 \texttt{first\_path} 为 \(0.5\, \text{ns}\)。为了对齐蓝线与橙线，本文舍弃蓝线前 \(0.25\, \text{ns}\) 的数据，舍弃橙线前 \(0.5\, \text{ns}\) 的数据，从而实现对齐。
 
-由于不同的CIR的first\_path不同，它们舍弃的数据长度不同，在64倍采样的情况下，舍弃的数据长度在0到63之间波动，我们会保留(CIR\_LEN-1)*64个对齐好的采样点，这时每个样本同一采样点对应的距离相同。
+由于不同的 CIR 的 \texttt{first\_path} 不同，它们舍弃的数据长度也不同。在64倍采样的情况下，舍弃的数据长度在0到63之间波动，我们会保留 \((\texttt{CIR\_LEN}-1) \times 64\) 个对齐好的采样点，这时每个样本同一采样点对应的距离相同。
 
+具体的效果如图 \ref{fig:align} 所示。经过上采样后，CIR 由图 \ref{fig:abs_cir} 变为图 \ref{fig:abs_up_cir}，此时 CIR 还未通过 \texttt{first\_path} 对齐。可以看到两条 CIR 数据虽然波形稳定，但是在水平方向有一个明显的偏差，这说明采样点没有对齐。在经过 \texttt{first\_path} 对齐后，我们得到图 \ref{fig:abs_time_up_cir}，完成对于采样点的对齐。
 
 
 \subsection{对齐相位}
