@@ -8,7 +8,7 @@
 \section{UWB信道脉冲响应相关技术}
 \section{深度学习相关技术}
 
-\chapter{数据预处理}
+\chapter{数据采集与预处理}
 \section{引言}
 \section{使用preamble归一化}
 \section{上采样}
@@ -142,7 +142,7 @@ fft法直接在频域上进行修改，通过ifft变化得到时域的信号，�
 \[ X[k] = \text{FFT}\{ x[n] \} \]
 
 \textbf{频域补零：}
-然后在频域上插入零，得到图\ref{fig:sinc_freq}。这个操作相当于在时域进行上采样和sinc插值。在频域中的每个非零点之间插入3个零，新的频域序列为：
+然后在频域上插入零，得到图\ref{fig:sinc_freq}。这个操作相当于在时域进行上采样和sinc插值。对于4倍上采样，在频域中的每个非零点之间插入3个零，新的频域序列为：
 \[ \tilde{X}[k] = \begin{cases}
 X[k/4], & \text{if } k \mod 4 = 0 \\
 0, & \text{otherwise}
@@ -155,8 +155,86 @@ X[k/4], & \text{if } k \mod 4 = 0 \\
 相比于sinc插值，fft法的代码量更少，计算量更小，并且更加容易理解。
 但是需要注意的是，fft法的频域补零的个数必须为2的整数次幂，否则会导致频域图像出现波纹，从而影响定位精度。
 
-
 \section{对齐}
+对齐主要由两部分组成，一个是对齐采样点，一个是对齐相位。
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.47\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plotted/align/abs_cir.png}
+        \caption{\label{fig:abs_cir}CIR的绝对值}
+    \end{subfigure}%
+    \begin{subfigure}{0.47\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plotted/align/real_imag_cir.png}
+        \caption{\label{fig:real_imag_cir}CIR的实部和虚部}
+    \end{subfigure}
+
+    \begin{subfigure}{0.47\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plotted/align/abs_up_cir.png}
+        \caption{\label{fig:abs_up_cir}上采样后的CIR的绝对值}
+    \end{subfigure}
+    \begin{subfigure}{0.47\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plotted/align/real_imag_up_cir.png}
+        \caption{\label{fig:real_imag_up_cir}上采样后的CIR的实部和虚部}
+    \end{subfigure}%
+
+    \begin{subfigure}{0.47\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plotted/align/abs_time_up_cir.png}
+        \caption{\label{fig:abs_time_up_cir}对齐采样点后的CIR的绝对值}
+    \end{subfigure}
+    \begin{subfigure}{0.47\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plotted/align/real_imag_time_up_cir.png}
+        \caption{\label{fig:real_imag_time_up_cir}对齐采样点后的CIR的实部和虚部}
+    \end{subfigure}
+
+    \begin{subfigure}{0.47\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plotted/align/abs_time_phase_up_cir.png}
+        \caption{\label{fig:abs_time_phase_up_cir}对齐采样点与相位后的CIR的绝对值}
+    \end{subfigure}
+    \begin{subfigure}{0.47\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plotted/align/real_imag_time_phase_up_cir.png}
+        \caption{\label{fig:real_imag_time_phase_up_cir}对齐采样点与相位后的CIR的实部和虚部}
+    \end{subfigure}
+    \caption{对齐采样点与相位}
+    \label{fig:align}
+\end{figure}
+
+\subsection{对齐采样点}
+由于DWM1000和NCJ29D5首发不在一个设备上，它们的晶振并不能完全同步，导致接收到的信号的采样的相对开始时间不同步。所以我们需要对采样点进行同步，这样同一个位置的采样点对应的信号传播时间相同。
+
+对于decawave的DWM1000模块，芯片提供first\_path，first\_path是波峰相对于第一个采集点的位置的小数部分，本文使用的数据集都选用了first\_path前4ns作为CIR的起始点。
+first\_path是通过decawave内置的波峰检测算法得到的~\cite{dwm1000_user_manual}，数据手册中提及算法的精度是\(\frac{1}{64}\)ns，到达了精度要求，所以对于decawave采集的数据，直接通过first\_path对齐即可。
+
+对于NXP的NCJ29D5模块，芯片没有提供first\_path，所以需要通过其他方法获得first\_path。考虑到CIR信号稳定的特点，本文使用的对齐方法是通过最小距离实现的。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=.9\linewidth]{plotted/first_path}
+    \caption{\label{fig:first_path}不同起始点的CIR}
+\end{figure}
+
+获取first\_path：可以看到，不同起始点的CIR的波形是不一样的，但是它们的波形都是稳定的，所以可以通过最小距离的方法对齐CIR的起始点。
+
+对齐first\_path：在没有通过first\_path对齐的情况下，CIR的起始点是随机的，如图\ref{fig:first_path}所示，其中蓝线被略微抬高，以便与橙线做出区分。
+
+CIR的最大值代表的是没有经过任何反射的直射信号，对应的距离0，而first\_path就是这个0距离点相对于第一个采样点的位置的小数部分，如图\ref{fig:first_path}所示，不同样本同一采样点对应的距离在对齐前是不同的。
+
+图中蓝线的first\_path为0.25ns，橙线的first\_path为0.5ns，为了对齐蓝线与橙线，本文舍弃蓝线前0.25ns的数据，舍弃橙线前0.5ns的数据，从而实现对齐。
+
+由于不同的CIR的first\_path不同，它们舍弃的数据长度不同，在64倍采样的情况下，舍弃的数据长度在0到63之间波动，我们会保留(CIR\_LEN-1)*64个对齐好的采样点，这时每个样本同一采样点对应的距离相同。
+
+
+
+\subsection{对齐相位}
+
+
 \section{异常值剔除}
 \section{方差图}
 
