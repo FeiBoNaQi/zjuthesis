@@ -212,17 +212,52 @@ X[k/4], & \text{if } k \mod 4 = 0 \\
 对于decawave的DWM1000模块，芯片提供first\_path，first\_path是波峰相对于第一个采集点的位置的小数部分，本文使用的数据集都选用了first\_path前4ns作为CIR的起始点。
 first\_path是通过decawave内置的波峰检测算法得到的~\cite{dwm1000_user_manual}，数据手册中提及算法的精度是\(\frac{1}{64}\)ns，到达了精度要求，所以对于decawave采集的数据，直接通过first\_path对齐即可。
 
-对于NXP的NCJ29D5模块，芯片没有提供first\_path，所以需要通过其他方法获得first\_path。考虑到CIR信号稳定的特点，本文使用的对齐方法是通过最小距离实现的。
+对于NXP的NCJ29D5模块，芯片没有提供first\_path，所以需要通过其他方法获得first\_path。考虑到CIR信号稳定的特点，本文使用的对齐方法是通过correlation实现的。
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=.9\linewidth]{plotted/first_path}
-    \caption{\label{fig:first_path}不同起始点的CIR}
+    \begin{subfigure}{0.9\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plotted/first_path}
+        \caption{\label{fig:first_path}不同起始点的CIR}
+    \end{subfigure}%
+
+    \centering
+    \begin{subfigure}{0.9\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plotted/correlation}
+        \caption{\label{fig:correlation}两个信号的correlation}
+    \end{subfigure}%
+
+    \caption{对齐采样点与相位}
+    \label{fig:first_path_and_correlation}
 \end{figure}
+\subsubsection{获取first\_path}
+从图\ref{fig:abs_up_cir}可以看到，不同起始点的CIR的波形都是稳定的，所以可以通过correlation计算它们的重叠程度。
 
-获取first\_path：可以看到，不同起始点的CIR的波形是不一样的，但是它们的波形都是稳定的，所以可以通过最小距离的方法对齐CIR的起始点。
+我们的目标是使用相关性找到两个离散信号之间的相关程度，在重叠最多的位置相关程度最大，这个位置和信号偏移量存在固定的关系。
+在图\ref{fig:first_path}中，两个信号的长度相同，分别用 \( x_1[n] \) 和 \( x_2[n] \) 在离散时间中表示。使用以下公式计算两个信号的互相关：
 
-对齐 \texttt{first\_path}：如图 \ref{fig:first_path} 所示，在未通过 \texttt{first\_path} 对齐的情况下，CIR 的起始点是随机的。图中蓝线被略微抬高，以便与橙线区分。
+\[
+r_{x_1, x_2}[m] = \sum_{n=-N+1}^{N-1} x_1[n] \cdot x_2[n+m]
+\]
+
+其中，\( N \) 是信号的长度。
+
+然后扫描所得的互相关图\ref{fig:correlation}，以找到最大值出现的索引，表示为 \( \texttt{peak\_index} \)。此索引对应于两个信号之间的偏移量，并在代码中如下计算：
+\[
+\texttt{peak\_index} = \texttt{np.argmax(correlation)}
+\]
+\[
+m_{\text{peak}}  = (\texttt{peak\_index} - \texttt{N}) \cdot \texttt{sample\_interval}
+\]
+此偏移量， \( m_{\text{peak}} \)，表示为对齐两个信号所需的水平移动。在这种特殊情况下，\( m_{\text{peak}} = -0.25ns \)， 表示信号2左移\(0.25ns\)与信号1对齐。
+
+对于从NCJ29D5采集的数据，本文把第一个CIR信号作为参考,把峰值点手工移动到4ns处，其它CIR样本相对于第一个CIR信号通过这种方法得到first\_path。
+
+
+\subsubsection{对齐first\_path}
+如图 \ref{fig:first_path} 所示，在未通过 \texttt{first\_path} 对齐的情况下，CIR 的起始点是随机的。图中蓝线被略微抬高，以便与橙线区分。
 
 CIR 的最大值代表没有经过任何反射的直射信号，对应的距离为0。而 \texttt{first\_path} 就是这个0距离点相对于第一个采样点的位置的小数部分。不同样本在对齐前，同一采样点对应的距离是不同的。
 
@@ -258,7 +293,6 @@ d_{\ell_1}(X_{\text{ref}}, X_{\text{rot}}) = \sum_{n=1}^N |X_{\text{ref}}[n] - X
 \]
 其中 \( d_{\ell_1}(X_{\text{ref}}, X_{\text{rot}}) = \{d_{\ell_1}(X_{\text{ref}}, X_{\text{rot}})\} \) 是所有计算的 \( \ell_1 \)-距离的集合。最小值 \( \hat{X} \) 表示了最佳匹配。
 经过相位对齐后本文得到图\ref{fig:real_imag_time_phase_up_cir}。
-
 
 \section{异常值剔除}
 \section{方差图}
