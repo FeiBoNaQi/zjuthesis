@@ -295,6 +295,24 @@ d_{\ell_1}(X_{\text{ref}}, X_{\text{rot}}) = \sum_{n=1}^N |X_{\text{ref}}[n] - X
 经过相位对齐后本文得到图\ref{fig:real_imag_time_phase_up_cir}。
 
 \section{异常值剔除}
+
+错误的CIR测量可能会导致后续的均值，方差积累误差，进而干扰后续模型的表现，因此本文依据以下标准排除信号。
+
+CIR的测量主要是通过acculumator实现的，preamble accumulation count记录了accumulator收集的信号数量。
+如果preamble accumulation count小于某个阈值，说明收集的信号数量太少，此时的CIR测量不可靠，应该被排除。
+我们选用的阈值是64，即收集的信号数量小于64时，CIR测量不可靠。
+
+在估计的 First\_Path 之前的CIR样本的幅度不能大于某一个特定的值，这些信号是
+接收器在First\_Path到达之前收集的，反应了空间中的噪声大小，对于噪声过大的采样点本文选择排除。
+
+测量CIR的First\_Path幅度不能与均值相差过多。当测量的First\_Path大于均值的五倍或小于两倍时，测量被拒绝。
+
+许多原因可能导致这种错误的CIR测量，
+例如DWM1000的前沿检测算法未能正确检测First\_Path位置
+或当两个模块同时传输时发生数据包碰撞。
+
+
+
 \section{方差图}
 
 \chapter{定位}
