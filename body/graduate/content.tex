@@ -312,8 +312,35 @@ CIR的测量主要是通过acculumator实现的，preamble accumulation count记
 或当两个模块同时传输时发生数据包碰撞。
 
 
-
 \section{方差图}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=.95\linewidth]{imported/方差图生成流程}
+    \caption{\label{fig:variance_graph_pipline}方差图生成流程}
+\end{figure}
+当场景中出现移动对象时，它会在累积的CIR中产生具有较高方差的区域。通过分析方差图，深度学习算法可以检测到由对象的移动产生的特定模式。图\ref{fig:variance_graph_pipline}中说明了方差图生成的流程，其各个步骤如下所述。
+
+\subsubsection{均值滤波}
+由于数据已经过上采样和插值，因此均值滤波比以前\cite{Ledergerber}的方法更简单，但效果更好。我们使用累积均值来计算均值，如下所示：
+\begin{equation}
+    h = 0.95h + 0.05z
+\end{equation}
+其中，系数 \( h \) 用第一个接收到的测量值 \( z \) 初始化为 \( h = z \)。
+
+\subsubsection{累积方差}
+有了均值以后，可以进一步得到当前测量的CIR的方差度量。这一步也比以前\cite{Ledergerber}的方法更简单。我们使用两个累积均值来跟踪当前和背景方差：
+\begin{align}
+    V_c &= 0.9V_c + 0.1y \\
+    V_b &= 0.999V_b + 0.001y
+\end{align}
+
+\subsubsection{背景减除}
+通过从当前方差度量中减去背景方差度量，可以检测到CIR中具有暂时较高方差的区域，公式如下：
+\begin{equation}
+    S = V_c - 1.3V_b
+\end{equation}
+完成这三个步骤后，生成了每个样本的方差，最后本文在慢时间对样本进行堆叠，生成方差图。
+
 
 \chapter{定位}
 
