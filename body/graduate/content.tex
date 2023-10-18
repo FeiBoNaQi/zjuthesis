@@ -13,6 +13,10 @@
 \section{本文主要工作}
 \section{本文结构安排}
 
+第一周       脚踢， 推进定位相关工作
+第二周       国内外研究现状 ，研究背景及意义， 推进定位相关工作
+第三周       相关技术（UWB，CNN LSTM）， 完成定位除结论外的书写
+第四周       相关技术（particle filter，聚类） 呼吸
 \chapter{相关技术}
 \section{UWB信道脉冲响应相关技术}
 \section{深度学习相关技术}
@@ -357,7 +361,108 @@ CIR的测量主要是通过acculumator实现的，preamble accumulation count记
 
 \section{引言}
 \section{采集设备}
+(to do: 
+缺少实物图：板子的样子，装在盒子里也可以，如果可以的话可以拍一个装在盒子里的和没在盒子里的
+安装图片：可以的话摆拍一下，放在保险杠下面就好，不用太放进去
+功能介绍: 就很简短的关于数字钥匙的功能，如果有什么宣传手册给我来一份就好，我可以自己整理
+
+)
+\section{数据采集与预处理}
+\subsection{CAN数据转化}
+控制器局域网络（Controller Area Network, CAN）是一种被广泛应用于汽车、工业自动化和航空电子等领域的网络通讯协议。
+CAN总线技术自1980年代由博世（Bosch）公司开发以来，已经成为实现设备之间高效、可靠通信的重要技术。
+它通过提供一种低成本、高效且可靠的通信解决方案，极大地推动了现代汽车和工业自动化系统的发展。CAN总线是车辆总线领域的国际标准（ISO 11898）\cite{Chen2009ResearchOT}。
+
+CAN总线技术具有以下几个特点：首先，其具有高效的通信能力，能够在噪音环境中保持稳定的通信。
+其次，CAN总线提供了一种简单而灵活的网络架构，可以轻松地将新设备添加到现有的网络中。
+再者，通过使用错误检测和错误处理机制，CAN总线能够确保通信的可靠性和实时性。
+最后，由于其开放的标准和广泛的支持，CAN总线技术得以在众多不同领域得到应用。
+
+本文使用的超宽带数字钥匙就是通过CAN总线与车辆的电子控制单元（Electronic Control Unit, ECU）进行通讯的，
+在开发过程中，本文使用电脑运行python程序，采集通过USB CAN转换器接收到的CAN数据，CAN数据里封装了脚踢检测所需要的CIR信息。
+
+USB CAN转换器实现了CAN总线与USB总线的转换，该设备提供python库文件，可以通过已有的API函数实现CAN数据的接收和发送。
+在开发阶段，本文使用电脑通过USB CAN转换器来读取CAN数据，以及运行脚踢检测的算法。开发完成以后，只需要使用嵌入式Linux设备的CAN API函数代替USB CAN设备的函数即可完成迁移。
+通过该设备接收到的数据格式如下所示：
+
+\noindent
+\begin{minipage}{.5\textwidth}
+    \begin{table}[H]
+        \caption{\label{tab:Header}消息头格式}
+        \centering
+        \begin{tabular}{|l|l|}
+        \hline
+        Field Name & Size \\
+        \hline
+        Magic Number & 2 bytes \\
+        \hline
+        Data Count & 4 bytes \\
+        \hline
+        Paddings & 2 bytes \\
+        \hline
+        \end{tabular}
+    \end{table}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+    \begin{table}[H]
+        \caption{\label{tab:Payload}消息体格式}
+        \centering
+        \begin{tabular}{|l|l|}
+        \hline
+        Field Name & Size \\
+        \hline
+        Index Number & 1 byte \\
+        \hline
+        Payload & 7 bytes \\
+        \hline
+        \end{tabular}
+    \end{table}
+\end{minipage}
+\vspace{\baselineskip} % Adds one line of vertical space
+
+其中，消息头部分的Magic Number为85 85，Data Count记录了采集到的CIR的长度，Paddings是2个字节的无效数据。消息体部分Index Number记录了这是某个消息头下的第几个CAN包，Payload部分记录了真正的CIR数据。
+每次采集到的CIR数据的长度是31个复数，每个复数由实部和虚部组成，实部占2个字节，虚部占两个字节。本文通过python程序把CAN数据包转换成其代表CIR的复数数组。
+
+\subsection{训练集采集}
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{imported/lab}
+        \caption{\label{fig:lab}实验室布置}
+    \end{subfigure}%
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{imported/car}
+        \caption{\label{fig:car}实车布置}
+    \end{subfigure}%
+    \caption{采集设备布置图}
+    \label{fig:lab_car_setup}
+\end{figure}
+如图\ref{fig:lab_car_setup}所示，我们分别在实验室和实车上进行了实验，实验使用了两个NXP NCJ\-29D5设备，其中一个作为发送器，另一个作为接收器。
+NXP NCJ29D5的频率范围为6.0 GHz至8.5 GHz。
+我们的计算机持续从USB CAN中接收CAN报文并转化成CIR数据。
+NXP NCJ29D5每秒生成20个CIR样本。
+在训练和测试中，数据经过上述所有处理步骤，并存储为对应于6通道图片的3维数组。
+
+为了训练我们的模型，我们从七个个体收集了数据，每个人进行大约150次水平扫腿。
+每次扫腿大约持续2秒，我们通过点击鼠标记录了扫腿开始的时间，以及扫腿结束的时间，从而标注出正样本的位置。
+我们手工挑选了特征强烈且清晰的数据。我们选择水平扫腿，因为它们最大化了UWB信号通道上的干扰，从而产生更清晰的信号。
+为了减少误报，我们在空白背景环境中，以及人们站立、走路、跑步、跺脚或跳跃时收集负样本。我们总共收集了693个负样本。
+
+为了验证，我们收集了120个水平扫腿样本和120个其他活动的样本，每个样本有20个。我们选择了一个没有参与训练数据收集的人来记录验证数据。
+
+在实验室中，我们使用一个铝支架将设备固定在1.6米的距离上，离地0.3米，以模拟汽车部署。我们将测试系统放在一个相对开放的区域，并使用两个12V电池供电。图7显示了实验室的设置。
+在真实的汽车部署中，我们将设备放置在汽车的后备箱下方一米处，天线面向汽车的后部，以最大化信号质量并最小化对其原始数字钥匙功能的干扰。
+在这两种情况下，传感器和被检测对象之间的距离均在0.4米以内。
+
+\subsection{数据集生成}
+  
+\section{模型设计}
 \section{模型训练}
+（to do: 在此处放置tensorboard产生的loss，metrics随着训练进行变化的图片）
+
 \section{模型部署}
 
 
