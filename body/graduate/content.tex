@@ -39,6 +39,14 @@ Fadel等人\cite{Adib_tracking,Adib2015MultiPersonLV}采用了多位移FMCW技�
 通过多分辨率分析感知由于呼吸而引起的微小运动来提取静态目标的信息。
 实验结果显示，该系统可以同时定位多达五个人，每个x/y维度的中位数精度为11.7 cm。
 
+Wi-Fi的信道状态信息（Channel State Information，CSI）对应CIR的频域信息，
+也可以用来对运动目标进行定位。相比于超宽带，Wi-Fi采用了MIMO与OFDM技术，可以同时得到多个载波的信道信息。
+Qian等人\cite{Qian}提出了Widar系统，通过Wi-Fi的CSI信息得到运动目标的多普勒频移，
+建立多普勒频移与运动目标位置的模型，从而得到位置，实现了0.35m的定位精度。
+但是Widar需要需要多条通讯链路从而得到目标的位置。
+Widar2.0使用单个Wi-Fi接入点实现了0.75m的定位精度，该系统探索CSI与TOF，AOA，
+以及多普勒频移的关系，从而得到运动目标的位置。
+
 \subsection{人体活动检测技术}
 
 
