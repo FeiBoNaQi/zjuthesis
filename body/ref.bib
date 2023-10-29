@@ -5,6 +5,20 @@
   year   = {2021},
   url    = {https://www.gov.cn/zhengce/2021-11/16/content_5651267.htm}
 }
+@inproceedings{Adib2015MultiPersonLV,
+  author    = {Adib, Fadel and Kabelac, Zachary and Katabi, Dina},
+  title     = {Multi-Person Localization via RF Body Reflections},
+  year      = {2015},
+  isbn      = {9781931971218},
+  publisher = {USENIX Association},
+  address   = {USA},
+  abstract  = {We have recently witnessed the emergence of RF-based indoor localization systems that can track user motion without requiring the user to hold or wear any device. These systems can localize a user and track his gestures by relying solely on the reflections of wireless signals off his body, and work even if the user is behind a wall or obstruction. However, in order for these systems to become practical, they need to address two main challenges: 1) They need to be able to operate in the presence of more than one user in the environment, and 2) they must be able to localize a user without requiring him to move or change his position.This paper presents WiTrack2.0, a multi-person localization system that operates in multipath-rich indoor environments and pinpoints users' locations based purely on the reflections of wireless signals off their bodies. WiTrack2.0 can even localize static users, and does so by sensing the minute movements due to their breathing. We built a prototype of WiTrack2.0 and evaluated it in a standard office building. Our results show that it can localize up to five people simultaneously with a median accuracy of 11.7 cm in each of the x/y dimensions. Furthermore, WiTrack2.0 provides coarse tracking of body parts, identifying the direction of a pointing hand with a median error of 12.5°, for multiple users in the environment.},
+  booktitle = {Proceedings of the 12th USENIX Conference on Networked Systems Design and Implementation},
+  pages     = {279–292},
+  numpages  = {14},
+  location  = {Oakland, CA},
+  series    = {NSDI'15}
+}
 @inproceedings{Adib_tracking,
   author    = {Adib, Fadel and Kabelac, Zachary and Katabi, Dina and Miller, Robert C.},
   title     = {3D Tracking via Body Radio Reflections},
@@ -19,13 +33,6 @@
   location  = {Seattle, WA},
   series    = {NSDI'14}
 }
-@inproceedings{Adib2015MultiPersonLV,
-  title     = {Multi-Person Localization via RF Body Reflections},
-  author    = {Fadel M. Adib and Zachary Kabelac and Dina Katabi},
-  booktitle = {Symposium on Networked Systems Design and Implementation},
-  year      = {2015},
-  url       = {https://api.semanticscholar.org/CorpusID:6157681}
-}
 
 @inproceedings{Bocus2021,
   author    = {Bocus, Mohammud J. and Piechocki, Robert J.},
@@ -38,15 +45,17 @@
   doi       = {10.1109/GLOBECOM46510.2021.9685213}
 }
 
-@article{Chen2009ResearchOT,
-  title   = {Research on the Controller Area Network},
-  author  = {Hanxing Chen and Jun Tian},
-  journal = {2009 International Conference on Networking and Digital Society},
-  year    = {2009},
-  volume  = {2},
-  pages   = {251-254},
-  url     = {https://api.semanticscholar.org/CorpusID:18038684}
+@inproceedings{Chen2009ResearchOT,
+  author    = {Chen, Hanxing and Tian, Jun},
+  booktitle = {2009 International Conference on Networking and Digital Society},
+  title     = {Research on the Controller Area Network},
+  year      = {2009},
+  volume    = {2},
+  number    = {},
+  pages     = {251-254},
+  doi       = {10.1109/ICNDS.2009.142}
 }
+
 @www{dwm1000_user_manual,
   title  = {DW1000 USER MANUAL},
   author = {Decawave},
@@ -167,6 +176,24 @@
   number  = {},
   pages   = {1-4},
   doi     = {10.1109/TIM.2022.3157004}
+}
+
+@article{WiFi_Wang_HAR,
+  author     = {Wang, Wei and Liu, Alex X. and Shahzad, Muhammad and Ling, Kang and Lu, Sanglu},
+  title      = {Device-Free Human Activity Recognition Using Commercial WiFi Devices},
+  year       = {2017},
+  issue_date = {May 2017},
+  publisher  = {IEEE Press},
+  volume     = {35},
+  number     = {5},
+  issn       = {0733-8716},
+  url        = {https://doi.org/10.1109/JSAC.2017.2679658},
+  doi        = {10.1109/JSAC.2017.2679658},
+  abstract   = {Since human bodies are good reflectors of wireless signals, human activities can be recognized by monitoring changes in WiFi signals. However, existing WiFi-based human activity recognition systems do not build models that can quantify the correlation between WiFi signal dynamics and human activities. In this paper, we propose a Channel State Information (CSI)-based human Activity Recognition and Monitoring system (CARM). CARM is based on two theoretical models. First, we propose a CSI-speed model that quantifies the relation between CSI dynamics and human movement speeds. Second, we propose a CSI-activity model that quantifies the relation between human movement speeds and human activities. Based on these two models, we implemented the CARM on commercial WiFi devices. Our experimental results show that the CARM achieves recognition accuracy of 96\% and is robust to environmental changes.},
+  journal    = {IEEE J.Sel. A. Commun.},
+  month      = {5},
+  pages      = {1118–1131},
+  numpages   = {14}
 }
 
 @www{zjugradthesisrules,
