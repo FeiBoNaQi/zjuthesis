@@ -196,7 +196,26 @@ UWB的通讯功耗在几百微瓦到几十毫瓦之间，远远小于CDMA，蓝�
 这有助于实现高精度定位，同时也有助于提高信道脉冲响应对环境的感知能力\cite{xhl_thesis}。
 
 \subsection{CIR的定义}
+信道脉冲响应提供了关于电磁波在空间中传播的信息。
+在UWB通讯系统中，发送设备和接收设备会计算它们之间的信道脉冲响应，
+信道脉冲响应的可以表示为\ref{eq:CIR}：
+\begin{equation}\label{eq:CIR}
+    h(t)=\sum_{p=0}^{P-1} \alpha_p \delta\left(t-\tau_p\right)
+\end{equation}
+其中，\( P \) 是多径信道中的路径数量，
+\( \alpha_p \) 和 \( \tau_p \) 分别表示第 \( p \) 条路径的幅度和延迟，
+\(\delta\) 表示Dirac函数\cite{UWB_CIR_INTRO}。
 
+接收到的信号\(y(t)\)是发送信号\(x(t)\)经过所有路径的叠加，可以表示为\ref{eq:y_x_cir}：
+\begin{equation}\label{eq:y_x_cir}
+    y(t)=x(t) * h(t)+n(t)
+\end{equation}
+其中\( n(t) \)表示高斯白噪声\cite{tse2005fundamentals}。 
+
+UWB CIR有非常强的多径特性，包括一系列信号从不同路径到达接收器的冲激响应。
+每条路径都有相关的幅度、延迟和相位，这些参数描述了
+UWB 信号在穿越各种材料和环境时所经历的反射、衍射和散射效应的结果，
+包含了 UWB 设备所处环境的特征。
 
 
 \section{深度学习相关技术}
