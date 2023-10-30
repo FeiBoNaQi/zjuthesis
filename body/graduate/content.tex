@@ -219,6 +219,51 @@ UWB 信号在穿越各种材料和环境时所经历的反射、衍射和散射�
 
 
 \section{深度学习相关技术}
+\subsection{CNN}
+
+\subsection{Residual Connection}
+
+\subsection{长短期记忆网络}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=.7\linewidth]{imported/LSTM_Cell}
+    \caption{\label{fig:LSTM_Cell}长短期记忆网络单元结构示意图}
+\end{figure}
+
+LSTM（Long Short-Term Memory, 长短期记忆网络）是一种独特的循环神经网络（RNN）结构。相比于传统的RNN，
+LSTM在处理序列数据上展现出了卓越的性能。
+它的设计初衷是为了克服传统RNN在处理长序列时容易出现的梯度消失和梯度爆炸问题。
+本文利用LSTM提取数据中的时间特征，下面介绍一下LSTM的结构。
+LSTM网络的核心由三个关键的门结构组成：遗忘门（\(f_t\)）、输入门（\(i_t\)）和输出门（\(o_t\)），
+这三个门结构共同工作来维护和更新一个叫做细胞状态的内部信息。
+
+\subsubsection{遗忘门（\(f_t\)）}
+遗忘门的角色是确定从细胞状态中应该保留或遗弃哪些信息。数学上，其定义如下：
+\begin{equation}
+f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)
+\end{equation}
+
+\subsubsection{输入门（\(i_t\)）}
+输入门确定哪些新的信息应被纳入细胞状态。它由两个部分组成：一个sigmoid层和一个tanh层。
+sigmoid层决定哪些信息会被更新，而tanh层生成一个新的候选值向量，这些值可能会被纳入细胞状态中。其公式如下：
+\begin{align}
+i_t &= \sigma(W_i \cdot [h_{t-1}, x_t] + b_i) \\
+\tilde{C}_t &= \tanh(W_C \cdot [h_{t-1}, x_t] + b_C)
+\end{align}
+
+\subsubsection{细胞状态更新}
+细胞状态是LSTM的“记忆核心”，能够长时间保存信息。它受到遗忘门的影响来确定哪些信息被遗弃，同时受到输入门的指导来加入新的信息。其更新公式为：
+\begin{equation}
+C_t = f_t \cdot C_{t-1} + i_t \cdot \tilde{C}_t
+\end{equation}
+
+\subsubsection{输出门（\(o_t\)）}
+输出门决定基于细胞状态输出哪些信息。首先，我们通过一个sigmoid层确定细胞状态中哪些部分会被输出。
+然后，将细胞状态通过tanh函数处理并与sigmoid门的输出相乘，这样只有选择性地输出部分信息。其公式定义如下：
+\begin{align}
+o_t &= \sigma(W_o \cdot [h_{t-1}, x_t] + b_o) \\
+h_t &= o_t \cdot \tanh(C_t)
+\end{align}
 
 \section{粒子滤波相关技术}
 
