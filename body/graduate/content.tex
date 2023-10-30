@@ -149,7 +149,22 @@ Fadel等人\cite{Adib_Breathe}基于FMCW雷达，开发了一套被动呼吸监�
 
 第七章总结了本文所做的关于UWB CIR被动感知方面的研究工作，并提出对其未来研究方向的规划。
 \chapter{相关技术}
-\section{UWB信道脉冲响应相关技术}
+\section{引言}
+\section{UWB CIR相关技术}
+\subsection{UWB的定义}
+UWB技术是一种短程无线通信协议，它使用从3.1到10.5 GHz的频率范围的短脉冲的无线电波，
+UWB技术可以使用非常低的功耗进行短程、高带宽通信，覆盖了大部分无线电频谱。
+UWB的带宽通常有两种定义，一种定义要求带宽大于中心频率的20\%，如\ref{eq:UWB_bandwidth_def_1}所示:
+\begin{equation}\label{eq:UWB_bandwidth_def_1}
+    B_f=\frac{2\left(f_H-f_L\right)}{f_H+f_L} \geq 0.2
+\end{equation}
+另一种定义要求带宽大于500MHz,如\ref{eq:UWB_bandwidth_def_2}所示:
+\begin{equation}\label{eq:UWB_bandwidth_def_2}
+    f_H-f_L \geq 500 \mathrm{MHz}
+\end{equation}
+这里\(f_H\) 和 \(f_L\)是指上限频率和下限频率，通常定义为相对于主峰小10dB的频率\cite{UWB_Characteristics}。
+
+\subsection{CIR的定义}
 \section{深度学习相关技术}
 
 \section{粒子滤波相关技术}

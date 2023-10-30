@@ -5,6 +5,23 @@
   year   = {2021},
   url    = {https://www.gov.cn/zhengce/2021-11/16/content_5651267.htm}
 }
+@inproceedings{Adib_Breathe,
+  author    = {Adib, Fadel and Mao, Hongzi and Kabelac, Zachary and Katabi, Dina and Miller, Robert C.},
+  title     = {Smart Homes That Monitor Breathing and Heart Rate},
+  year      = {2015},
+  isbn      = {9781450331456},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/2702123.2702200},
+  doi       = {10.1145/2702123.2702200},
+  abstract  = {The evolution of ubiquitous sensing technologies has led to intelligent environments that can monitor and react to our daily activities, such as adapting our heating and cooling systems, responding to our gestures, and monitoring our elderly. In this paper, we ask whether it is possible for smart environments to monitor our vital signs remotely, without instrumenting our bodies. We introduce Vital-Radio, a wireless sensing technology that monitors breathing and heart rate without body contact. Vital-Radio exploits the fact that wireless signals are affected by motion in the environment, including chest movements due to inhaling and exhaling and skin vibrations due to heartbeats. We describe the operation of Vital-Radio and demonstrate through a user study that it can track users' breathing and heart rates with a median accuracy of 99\%, even when users are 8~meters away from the device, or in a different room. Furthermore, it can monitor the vital signs of multiple people simultaneously. We envision that Vital-Radio can enable smart homes that monitor people's vital signs without body instrumentation, and actively contribute to their inhabitants' well-being.},
+  booktitle = {Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems},
+  pages     = {837–846},
+  numpages  = {10},
+  keywords  = {vital signs, smart homes, seeing through walls, wireless, breathing, well-being},
+  location  = {Seoul, Republic of Korea},
+  series    = {CHI '15}
+}
 @inproceedings{Adib_tracking,
   author    = {Adib, Fadel and Kabelac, Zachary and Katabi, Dina and Miller, Robert C.},
   title     = {3D Tracking via Body Radio Reflections},
@@ -19,6 +36,7 @@
   location  = {Seattle, WA},
   series    = {NSDI'14}
 }
+
 @inproceedings{Adib2015MultiPersonLV,
   author    = {Adib, Fadel and Kabelac, Zachary and Katabi, Dina},
   title     = {Multi-Person Localization via RF Body Reflections},
@@ -62,14 +80,14 @@
 }
 
 @article{Bocus_dataset_IPL,
-author = {Bocus, Mohammud and Li, Wenda and Vishwakarma, Shelly and Kou, Roget and Tang, Chong and Woodbridge, Karl and Craddock, Ian and McConville, Ryan and Santos-Rodriguez, Raul and Chetty, K. and Piechocki, Robert},
-year = {2022},
-month = {08},
-pages = {},
-title = {OPERAnet, a multimodal activity recognition dataset acquired from radio frequency and vision-based sensors},
-volume = {9},
-journal = {Scientific Data},
-doi = {10.1038/s41597-022-01573-2}
+  author  = {Bocus, Mohammud and Li, Wenda and Vishwakarma, Shelly and Kou, Roget and Tang, Chong and Woodbridge, Karl and Craddock, Ian and McConville, Ryan and Santos-Rodriguez, Raul and Chetty, K. and Piechocki, Robert},
+  year    = {2022},
+  month   = {08},
+  pages   = {},
+  title   = {OPERAnet, a multimodal activity recognition dataset acquired from radio frequency and vision-based sensors},
+  volume  = {9},
+  journal = {Scientific Data},
+  doi     = {10.1038/s41597-022-01573-2}
 }
 
 @inproceedings{Bocus2021,
@@ -176,11 +194,36 @@ doi = {10.1038/s41597-022-01573-2}
   url    = {https://sourceforge.net/projects/pgf/}
 }
 
+@inproceedings{UbiBreathe,
+  author    = {Abdelnasser, Heba and Harras, Khaled A. and Youssef, Moustafa},
+  title     = {UbiBreathe: A Ubiquitous Non-Invasive WiFi-Based Breathing Estimator},
+  year      = {2015},
+  isbn      = {9781450334891},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/2746285.2755969},
+  doi       = {10.1145/2746285.2755969},
+  abstract  = {Monitoring breathing rates and patterns helps in the diagnosis and potential avoidance of various health problems. Current solutions for respiratory monitoring, however, are usually invasive and/or limited to medical facilities. In this paper, we propose a novel respiratory monitoring system, UbiBreathe, based on ubiquitous off-the-shelf WiFi-enabled devices. Our experiments show that the received signal strength (RSS) at a WiFi-enabled device held on a person's chest is affected by the breathing process. This effect extends to scenarios when the person is situated on the line-of-sight (LOS) between the access point and the device, even without holding it. UbiBreathe leverages these changes in the WiFi RSS patterns to enable ubiquitous non-invasive respiratory rate estimation, as well as apnea detection.We propose the full architecture and design for UbiBreathe, incorporating various modules that help reliably extract the hidden breathing signal from a noisy WiFi RSS. The system handles various challenges such as noise elimination, interfering humans, sudden user movements, as well as detecting abnormal breathing situations. Our implementation of UbiBreathe using off-the-shelf devices in a wide range of environmental conditions shows that it can estimate different breathing rates with less than 1 breaths per minute (bpm) error. In addition, UbiBreathe can detect apnea with more than 96\% accuracy in both the device-on-chest and hands-free scenarios. This highlights its suitability for a new class of anywhere respiratory monitoring.},
+  booktitle = {Proceedings of the 16th ACM International Symposium on Mobile Ad Hoc Networking and Computing},
+  pages     = {277–286},
+  numpages  = {10},
+  keywords  = {apnea detection, device-free activity recognition, non-invasive breathing monitoring, wifi-based breathing estimation},
+  location  = {Hangzhou, China},
+  series    = {MobiHoc '15}
+}
+
 @www{uwb_cellphone,
   title  = {List of UWB-enabled mobile devices},
   author = {Wikipedia},
   year   = {2023},
   url    = {https://en.wikipedia.org/wiki/List_of_UWB-enabled_mobile_devices}
+}
+
+@www{UWB_Characteristics,
+  title  = {Characteristics of ultra-wideband technology},
+  author = {ITU-R SM.1755-0},
+  year   = {2006},
+  url    = {https://www.itu.int/rec/R-REC-SM.1755-0-200605-I/en}
 }
 
 @article{uwb_history,
@@ -216,6 +259,17 @@ doi = {10.1038/s41597-022-01573-2}
   doi     = {10.1109/TIM.2022.3157004}
 }
 
+@inproceedings{Wang_Wifi_HAR,
+  author    = {Wang, Yuheng and Liu, Haipeng and Cui, Kening and Zhou, Anfu and Li, Wensheng and Ma, Huadong},
+  booktitle = {ICASSP 2021 - 2021 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
+  title     = {m-Activity: Accurate and Real-Time Human Activity Recognition Via Millimeter Wave Radar},
+  year      = {2021},
+  volume    = {},
+  number    = {},
+  pages     = {8298-8302},
+  doi       = {10.1109/ICASSP39728.2021.9414686}
+}
+
 @article{WiFi_Wang_HAR,
   author     = {Wang, Wei and Liu, Alex X. and Shahzad, Muhammad and Ling, Kang and Lu, Sanglu},
   title      = {Device-Free Human Activity Recognition Using Commercial WiFi Devices},
@@ -232,6 +286,15 @@ doi = {10.1038/s41597-022-01573-2}
   month      = {5},
   pages      = {1118–1131},
   numpages   = {14}
+}
+
+@inproceedings{zhao_Breathe,
+  author = {Zhao, Yanhua and Sark, Vladica and Krstic, Milos and Grass, Eckhard},
+  year   = {2021},
+  month  = {10},
+  pages  = {290-295},
+  title  = {Multi-Target Vital Signs Remote Monitoring Using mmWave FMCW Radar},
+  doi    = {10.1109/MTTW53539.2021.9607087}
 }
 
 @www{zjugradthesisrules,
@@ -253,60 +316,4 @@ doi = {10.1038/s41597-022-01573-2}
   author = {浙江大学本科生院},
   year   = {2018},
   url    = {http://bksy.zju.edu.cn/attachments/2018-01/01-1517384518-1149149.pdf}
-}
-
-@INPROCEEDINGS{Wang_Wifi_HAR,
-  author={Wang, Yuheng and Liu, Haipeng and Cui, Kening and Zhou, Anfu and Li, Wensheng and Ma, Huadong},
-  booktitle={ICASSP 2021 - 2021 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, 
-  title={m-Activity: Accurate and Real-Time Human Activity Recognition Via Millimeter Wave Radar}, 
-  year={2021},
-  volume={},
-  number={},
-  pages={8298-8302},
-  doi={10.1109/ICASSP39728.2021.9414686}
-}
-
-@inproceedings{UbiBreathe,
-author = {Abdelnasser, Heba and Harras, Khaled A. and Youssef, Moustafa},
-title = {UbiBreathe: A Ubiquitous Non-Invasive WiFi-Based Breathing Estimator},
-year = {2015},
-isbn = {9781450334891},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/2746285.2755969},
-doi = {10.1145/2746285.2755969},
-abstract = {Monitoring breathing rates and patterns helps in the diagnosis and potential avoidance of various health problems. Current solutions for respiratory monitoring, however, are usually invasive and/or limited to medical facilities. In this paper, we propose a novel respiratory monitoring system, UbiBreathe, based on ubiquitous off-the-shelf WiFi-enabled devices. Our experiments show that the received signal strength (RSS) at a WiFi-enabled device held on a person's chest is affected by the breathing process. This effect extends to scenarios when the person is situated on the line-of-sight (LOS) between the access point and the device, even without holding it. UbiBreathe leverages these changes in the WiFi RSS patterns to enable ubiquitous non-invasive respiratory rate estimation, as well as apnea detection.We propose the full architecture and design for UbiBreathe, incorporating various modules that help reliably extract the hidden breathing signal from a noisy WiFi RSS. The system handles various challenges such as noise elimination, interfering humans, sudden user movements, as well as detecting abnormal breathing situations. Our implementation of UbiBreathe using off-the-shelf devices in a wide range of environmental conditions shows that it can estimate different breathing rates with less than 1 breaths per minute (bpm) error. In addition, UbiBreathe can detect apnea with more than 96\% accuracy in both the device-on-chest and hands-free scenarios. This highlights its suitability for a new class of anywhere respiratory monitoring.},
-booktitle = {Proceedings of the 16th ACM International Symposium on Mobile Ad Hoc Networking and Computing},
-pages = {277–286},
-numpages = {10},
-keywords = {apnea detection, device-free activity recognition, non-invasive breathing monitoring, wifi-based breathing estimation},
-location = {Hangzhou, China},
-series = {MobiHoc '15}
-}
-
-@inproceedings{Adib_Breathe,
-author = {Adib, Fadel and Mao, Hongzi and Kabelac, Zachary and Katabi, Dina and Miller, Robert C.},
-title = {Smart Homes That Monitor Breathing and Heart Rate},
-year = {2015},
-isbn = {9781450331456},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/2702123.2702200},
-doi = {10.1145/2702123.2702200},
-abstract = {The evolution of ubiquitous sensing technologies has led to intelligent environments that can monitor and react to our daily activities, such as adapting our heating and cooling systems, responding to our gestures, and monitoring our elderly. In this paper, we ask whether it is possible for smart environments to monitor our vital signs remotely, without instrumenting our bodies. We introduce Vital-Radio, a wireless sensing technology that monitors breathing and heart rate without body contact. Vital-Radio exploits the fact that wireless signals are affected by motion in the environment, including chest movements due to inhaling and exhaling and skin vibrations due to heartbeats. We describe the operation of Vital-Radio and demonstrate through a user study that it can track users' breathing and heart rates with a median accuracy of 99\%, even when users are 8~meters away from the device, or in a different room. Furthermore, it can monitor the vital signs of multiple people simultaneously. We envision that Vital-Radio can enable smart homes that monitor people's vital signs without body instrumentation, and actively contribute to their inhabitants' well-being.},
-booktitle = {Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems},
-pages = {837–846},
-numpages = {10},
-keywords = {vital signs, smart homes, seeing through walls, wireless, breathing, well-being},
-location = {Seoul, Republic of Korea},
-series = {CHI '15}
-}
-
-@inproceedings{zhao_Breathe,
-author = {Zhao, Yanhua and Sark, Vladica and Krstic, Milos and Grass, Eckhard},
-year = {2021},
-month = {10},
-pages = {290-295},
-title = {Multi-Target Vital Signs Remote Monitoring Using mmWave FMCW Radar},
-doi = {10.1109/MTTW53539.2021.9607087}
 }
