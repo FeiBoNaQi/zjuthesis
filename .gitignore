@@ -262,3 +262,5 @@ TSWLatexianTemp*
 
 figure/plotted/
 to_be_checked.txt
+
+script/data_for_plot/*
